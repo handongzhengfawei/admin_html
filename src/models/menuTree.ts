@@ -2,17 +2,35 @@ import {Effect, Reducer} from 'umi';
 
 import {query} from '@/services/menuTree';
 
-export interface MenuModelType {
-
+export interface MenuItem {
+  path?: string;
+  name?: string;
+  children?: MenuItem[];
 }
 
-const MenuModel: MenuModelType = {
-  namespace: 'menuTree',
+export interface MenuModelState {
+  currentMenu?: MenuItem[];
+}
+
+export interface MenuModelType {
+  namespace: 'menu',
+  state: MenuModelState,
+  effects: {
+    fetchCurrent: Effect
+  },
+  reducers: {
+    menuTree: Reducer<MenuModelState>;
+  }
+}
+
+const MenuTreeModel: MenuModelType = {
+  namespace: 'menu',
   state: {
-    menuData: [],
+    currentMenu: [],
   },
   effects: {
-    * queryMenuTree(_, {call, put}) {
+    * fetchCurrent(_, {call, put}) {
+      console.log(9999)
       const response = yield call(query);
       yield put({
         type: 'menuTree',
@@ -20,16 +38,14 @@ const MenuModel: MenuModelType = {
       })
     }
   },
-
   reducers: {
     menuTree(state, action) {
       return {
         ...state,
-        menuData: action.payload
+        currentMenu: action.payload || []
       }
     }
-
   }
 }
 
-export default MenuModel;
+export default MenuTreeModel;

@@ -13,7 +13,7 @@ export interface UserLayoutProps extends Partial<ConnectProps> {
   };
 }
 
-const UserLayout: React.FC<UserLayoutProps> = (props) => {
+const UserLayout: React.FC<UserLayoutProps> = props => {
   const {
     route = {
       routes: [],
@@ -26,11 +26,10 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
       pathname: '',
     },
   } = props;
-  const { formatMessage } = useIntl();
+  const {} = useIntl();
   const { breadcrumb } = getMenuData(routes);
   const title = getPageTitle({
     pathname: location.pathname,
-    formatMessage,
     breadcrumb,
     ...props,
   });
