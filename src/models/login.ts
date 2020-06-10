@@ -33,12 +33,15 @@ const Model: LoginModelType = {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
+      console.log(response);
+      response.currentAuthority = 'user';
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (response.code === 0) {
+        localStorage.setItem("Authorization", response.data.token);
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };

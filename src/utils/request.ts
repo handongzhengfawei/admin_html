@@ -2,8 +2,8 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend } from 'umi-request';
-import { notification } from 'antd';
+import {extend} from 'umi-request';
+import {notification} from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -27,10 +27,10 @@ const codeMessage = {
  * 异常处理程序
  */
 const errorHandler = (error: { response: Response }): Response => {
-  const { response } = error;
+  const {response} = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
-    const { status, url } = response;
+    const {status, url} = response;
 
     notification.error({
       message: `请求错误 ${status}: ${url}`,
@@ -53,4 +53,22 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+/**
+ * request拦截器, 改变url 或 options.
+ */
+request.interceptors.request.use(async (url, options) => {
+  let token = localStorage.getItem("Authorization");
+  console.log(token)
+  const headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ' + token,
+  }
+  return (
+    {
+      url: url,
+      options: {...options, headers: headers},
+    }
+  );
+});
 export default request;

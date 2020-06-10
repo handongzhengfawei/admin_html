@@ -5,7 +5,7 @@ export async function query(): Promise<any> {
 }
 
 export async function queryCurrent(): Promise<any> {
-  return request('/api/currentUser');
+  return request('http://192.168.31.6:8080/sys/user/current');
 }
 
 export async function queryNotices(): Promise<any> {

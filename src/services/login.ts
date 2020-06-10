@@ -7,8 +7,9 @@ export interface LoginParamsType {
   captcha: string;
 }
 
-export async function fakeAccountLogin(params: LoginParamsType) {
-  return request('/api/login/account', {
+
+export async function fakeAccountLogin(params: LoginParamsType): Promise<any> {
+  return request('http://192.168.31.6:8080/login', {
     method: 'POST',
     data: params,
   });

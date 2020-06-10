@@ -7,21 +7,21 @@
  */
 export default {
   dev: {
-    '/api/': {
-      target: 'https://preview.pro.ant.design',
+    '/login': {
+      target: 'http://127.0.0.1:8080',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
   },
   test: {
-    '/api/': {
+    '/login': {
       target: 'https://preview.pro.ant.design',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
   },
   pre: {
-    '/api/': {
+    '/login': {
       target: 'your pre url',
       changeOrigin: true,
       pathRewrite: { '^': '' },
